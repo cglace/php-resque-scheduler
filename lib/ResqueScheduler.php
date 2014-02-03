@@ -24,7 +24,7 @@ class ResqueScheduler
 	 */
 	public static function enqueueIn($in, $queue, $class, array $args = array())
 	{
-		self::enqueueAt(time() + $in, $queue, $class, $args);
+		self::enqueueAt(round(microtime(true) * 1000) + $in * 1000, $queue, $class, $args);
 	}
 
 	/**
@@ -219,7 +219,7 @@ class ResqueScheduler
 	public static function nextDelayedTimestamp($at = null)
 	{
 		if ($at === null) {
-			$at = time();
+			$at = round(microtime(true) * 1000);
 		}
 		else {
 			$at = self::getTimestamp($at);
